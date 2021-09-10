@@ -2,25 +2,28 @@ package core;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 800, HEIGHT = WIDTH / 12 * 9;
+    public static final int WIDTH = 1080, HEIGHT = WIDTH / 16 * 9;
     private Thread thread;
     private boolean running = false;
 
+
     private final Handler handler;
-    Random random = new Random();
 
     public Game() {
-        new Window(WIDTH, HEIGHT, "2D Game", this);
 
+        this.setFocusable(true);
         handler = new Handler();
+        this.addKeyListener(new KeyInput(handler));
 
-        for (int i = 0; i < 20; i++) {
-            handler.addObject(new Player(random.nextInt(WIDTH), random.nextInt(HEIGHT), ID.Player));
-        }
+        new Window(WIDTH, HEIGHT, "PONG 2021", this);
+
+        handler.addObject(new Player(WIDTH / 2 + 450, HEIGHT / 2 - 50, ID.Player));
+        handler.addObject(new Player(WIDTH / 2 - 480, HEIGHT / 2 - 50,  ID.Player2));
+        handler.addObject(new Ball(WIDTH / 2, HEIGHT / 2 - 80, ID.Ball));
+
 
 
     }
@@ -96,6 +99,16 @@ public class Game extends Canvas implements Runnable {
         graphics.dispose();
         bufferStrat.show();
 
+    }
+
+    public static int clamp(int var, int min, int max) {
+
+        if (var >= max)
+            return var = max;
+        else if (var <= min)
+            return var = min;
+        else
+            return var;
     }
 
     public static void main(String[] args) {
