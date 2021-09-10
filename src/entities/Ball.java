@@ -1,4 +1,8 @@
-package core;
+package entities;
+
+import core.Game;
+import core.GameObject;
+import core.ID;
 
 import java.awt.*;
 import java.util.Random;
