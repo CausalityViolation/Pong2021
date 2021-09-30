@@ -23,9 +23,9 @@ public class Game extends Canvas implements Runnable {
 
         new Window(WIDTH, HEIGHT, "PONG 2021", this);
 
-        handler.addObject(new Player(WIDTH / 2 + 450, HEIGHT / 2 - 50, ID.Player));
-        handler.addObject(new Player(WIDTH / 2 - 480, HEIGHT / 2 - 50, ID.Player2));
-        handler.addObject(new Ball(WIDTH / 2, HEIGHT / 2 - 80, ID.Ball));
+        handler.addObject(new Player(WIDTH / 2 + 450, HEIGHT / 2 - 50, ID.Player, handler));
+        handler.addObject(new Player(WIDTH / 2 - 480, HEIGHT / 2 - 50, ID.Player2, handler));
+        handler.addObject(new Ball(WIDTH / 2, HEIGHT / 2 - 80, ID.Ball, handler));
         handler.addObject(new HUD(500, 500, ID.PlayerScore));
         handler.addObject(new HUD(WIDTH, HEIGHT, ID.Player2Score));
 

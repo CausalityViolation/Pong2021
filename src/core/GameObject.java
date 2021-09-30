@@ -18,6 +18,9 @@ public abstract class GameObject {
 
     public abstract void render(Graphics graphics);
 
+    public abstract Rectangle getBounds();
+
+
     public int getX() {
         return x;
     }
