@@ -50,8 +50,8 @@ public class Ball extends GameObject {
 
             handler.removeObject(this);
             Ball ball = new Ball(WIDTH / 2, HEIGHT / 2, ID.Ball, handler);
-            ball.setSpeedX(randomSpeed());
-            ball.setSpeedY(randomSpeed());
+            ball.setSpeedX(0);
+            ball.setSpeedY(0);
             handler.addObject(ball);
             scored = false;
 
@@ -62,7 +62,7 @@ public class Ball extends GameObject {
 
     }
 
-    private void collision() {
+    public void collision() {
 
         for (int i = 0; i < handler.objects.size(); i++) {
 

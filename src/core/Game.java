@@ -12,6 +12,14 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private final Handler handler;
+    private final Menu menu;
+
+    public enum STATE {
+        Menu,
+        Game
+    }
+
+    public STATE gameState = STATE.Menu;
 
     public Game() {
 
@@ -19,18 +27,13 @@ public class Game extends Canvas implements Runnable {
 
 
         handler = new Handler();
-        Ball ball = new Ball(WIDTH / 2, HEIGHT / 2, ID.Ball, handler);
-        this.addKeyListener(new KeyInput(handler));
+        menu = new Menu(this, handler);
+
+
+        this.addKeyListener(new KeyInput(handler, this));
+        this.addMouseListener(menu);
 
         new Window(WIDTH, HEIGHT, "PONG 2021", this);
-
-
-        handler.addObject(new Player(WIDTH / 2 + 450, HEIGHT / 2 - 50, ID.Player, handler));
-        handler.addObject(new Player(WIDTH / 2 - 480, HEIGHT / 2 - 50, ID.Player2, handler));
-        handler.addObject(ball);
-        handler.addObject(new HUD(WIDTH, HEIGHT, ID.PlayerScore));
-        handler.addObject(new HUD(WIDTH, HEIGHT, ID.Player2Score));
-
 
     }
 
@@ -86,6 +89,10 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
 
+        if (gameState == STATE.Menu) {
+            menu.tick();
+        }
+
     }
 
     private void render() {
@@ -101,7 +108,14 @@ public class Game extends Canvas implements Runnable {
         graphics.setColor(Color.black);
         graphics.fillRect(0, 0, WIDTH, HEIGHT);
 
-        handler.render(graphics);
+
+        if (gameState == STATE.Game) {
+
+            handler.render(graphics);
+
+        } else if (gameState == STATE.Menu) {
+            menu.render(graphics);
+        }
 
 
         graphics.dispose();
