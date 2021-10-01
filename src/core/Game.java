@@ -19,14 +19,16 @@ public class Game extends Canvas implements Runnable {
 
 
         handler = new Handler();
+        Ball ball = new Ball(WIDTH / 2, HEIGHT / 2, ID.Ball, handler);
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "PONG 2021", this);
 
+
         handler.addObject(new Player(WIDTH / 2 + 450, HEIGHT / 2 - 50, ID.Player, handler));
         handler.addObject(new Player(WIDTH / 2 - 480, HEIGHT / 2 - 50, ID.Player2, handler));
-        handler.addObject(new Ball(WIDTH / 2, HEIGHT / 2 - 80, ID.Ball, handler));
-        handler.addObject(new HUD(500, 500, ID.PlayerScore));
+        handler.addObject(ball);
+        handler.addObject(new HUD(WIDTH, HEIGHT, ID.PlayerScore));
         handler.addObject(new HUD(WIDTH, HEIGHT, ID.Player2Score));
 
 
@@ -83,6 +85,7 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
+
     }
 
     private void render() {
@@ -115,6 +118,7 @@ public class Game extends Canvas implements Runnable {
         else
             return var;
     }
+
 
     public static void main(String[] args) {
         new Game();

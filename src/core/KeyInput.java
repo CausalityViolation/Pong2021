@@ -1,11 +1,18 @@
 package core;
 
+
+import entities.Ball;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import static core.Game.HEIGHT;
+import static core.Game.WIDTH;
 
 public class KeyInput extends KeyAdapter {
 
     private final Handler handler;
+
 
     public KeyInput(Handler handler) {
         this.handler = handler;
@@ -36,6 +43,22 @@ public class KeyInput extends KeyAdapter {
             System.exit(0);
         }
 
+        if (key == KeyEvent.VK_ENTER) {
+            for (int i = 0; i < handler.objects.size(); i++) {
+                GameObject tempObject = handler.objects.get(i);
+
+                if (tempObject.getId() == ID.Ball) {
+
+                    handler.removeObject(tempObject);
+                    Ball ball = new Ball(WIDTH / 2, HEIGHT / 2, ID.Ball, handler);
+                    ball.setSpeedY(ball.randomSpeed());
+                    ball.setSpeedX(ball.randomSpeed());
+                    handler.addObject(ball);
+
+                }
+            }
+
+        }
     }
 
     public void keyReleased(KeyEvent event) {

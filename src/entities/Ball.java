@@ -1,15 +1,17 @@
 package entities;
 
-import core.Game;
-import core.GameObject;
-import core.Handler;
-import core.ID;
+import core.*;
 
 import java.awt.*;
+import java.util.Random;
+
+import static core.Game.HEIGHT;
+import static core.Game.WIDTH;
 
 public class Ball extends GameObject {
 
     Handler handler;
+    Boolean scored = false;
 
     public Ball(int x, int y, ID id, Handler handler) {
         super(x, y, id);
@@ -28,8 +30,33 @@ public class Ball extends GameObject {
         x += speedX;
         y += speedY;
 
-        if (y <= 0 || y >= Game.HEIGHT - 60) speedY *= -1;
-        else if (x <= 0 || x >= Game.WIDTH - 30) speedX *= -1;
+        if (y <= 0 || y >= HEIGHT - 60) {
+
+            speedY *= -1;
+
+        } else if (x == WIDTH - 30) {
+
+            HUD.playerOneScore++;
+            scored = true;
+
+        } else if (x == WIDTH - 1080) {
+
+            HUD.playerTwoScore++;
+            scored = true;
+
+        }
+
+        if (scored) {
+
+            handler.removeObject(this);
+            Ball ball = new Ball(WIDTH / 2, HEIGHT / 2, ID.Ball, handler);
+            ball.setSpeedX(randomSpeed());
+            ball.setSpeedY(randomSpeed());
+            handler.addObject(ball);
+            scored = false;
+
+
+        }
 
         collision();
 
@@ -60,6 +87,23 @@ public class Ball extends GameObject {
             graphics.setColor(Color.WHITE);
         }
 
-        graphics.fillRect(x, y, 16, 16);
+        graphics.fillOval(x, y, 16, 16);
     }
+
+    public int randomSpeed() {
+
+        java.util.Random random = new java.util.Random();
+        int result = random.nextInt(2) + 1;
+        int speed = -3;
+
+        if (result == 1) {
+            speed = 3;
+
+            return speed;
+
+        }
+
+        return speed;
+    }
+
 }

@@ -30,26 +30,6 @@ public class Player extends GameObject {
         x = Game.clamp(x, 0, Game.WIDTH - 32);
         y = Game.clamp(y, 0, Game.HEIGHT - 100);
 
-        collision();
-
-    }
-
-    private void collision() {
-
-        for (int i = 0; i < handler.objects.size(); i++) {
-
-            GameObject tempObject = handler.objects.get(i);
-
-            if (tempObject.getId() == ID.Ball) {
-
-                if (getBounds().intersects(tempObject.getBounds())) {
-                    //collision code
-
-
-                }
-            }
-
-        }
 
     }
 
